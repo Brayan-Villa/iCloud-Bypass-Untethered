@@ -57,7 +57,7 @@ rm tokenfinal tokenpre activ &>>/dev/nul&
 		sshpass -p 'alpine' scp -p ./boot root@localhost:'/./boot.tar.lzma';
 		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'lzma -d -v /./boot.tar.lzma'; 
 		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'tar -xvf /./boot.tar -C /./';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /./boot.tar';
+		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'BasebandON && rm /./boot.tar';
 		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod 755 /usr/libexec/substrate';
 		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost '/usr/libexec/substrate';
 		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod 755 /usr/libexec/substrated';
@@ -256,7 +256,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /usr/include/substrate.h';
 		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /usr/lib/substrate';
 		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /guid';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /./private/var/mobile/Library/Logs/mobileactivationd';
+		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'BasebandOFF && rm -rf /./private/var/mobile/Library/Logs/mobileactivationd';
 		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'uicache --all && killall backboardd';
 		read -p 'CONCLUIDO';
 		
