@@ -38,70 +38,64 @@ if test -z "$Check";
   else
     point1;
 fi
-function Inicio()
-{	  
+function Inicio() {	  
 rm tokenfinal tokenpre activ &>>/dev/nul&
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'mount -o rw,union,update /';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'snappy -f / -r `snappy -f / -l | sed -n 2p` -t orig-fs';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /usr/libexec/substrate /usr/libexec/substrated /usr/bin/cycc /usr/bin/cynject /./Library/Frameworks/* /usr/lib/cycript0.9 /usr/lib/libsubstrate.dylib /Library/MobileSubstrate /usr/include/substrate.h /usr/lib/substrate';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'cp -rp /./System/Library/PrivateFrameworks/MobileActivation.framework/Support/Certificates/FactoryActivation.pem /./System/Library/PrivateFrameworks/MobileActivation.framework/Support/Certificates/RaptorActivation.pem';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /private/var/mobile/Library/Preferences/*purplebuddy*';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'find /./private/var/containers/Data/System -iname "internal" >>/guid';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'GUI=$(cat /guid) && rm -rf $GUI/../activation_records';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'GUI=$(cat /guid) && rm -rf $GUI && rm /guid';
-		sshpass -p 'alpine' scp -p ./uikit root@localhost:'/./';
-		sshpass -p 'alpine' scp -p ./lzma root@localhost:'/./usr/bin/';
-		sshpass -p 'alpine' scp -p ./plutil root@localhost:'/./usr/bin/';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'tar -xvf /./uikit -C /./';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod -R 755 /usr/bin';
-		sshpass -p 'alpine' scp -p ./boot root@localhost:'/./boot.tar.lzma';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'lzma -d -v /./boot.tar.lzma'; 
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'tar -xvf /./boot.tar -C /./';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'BasebandON && rm /./boot.tar';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod 755 /usr/libexec/substrate';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost '/usr/libexec/substrate';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod 755 /usr/libexec/substrated';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost '/usr/libexec/substrated';
-		sshpass -p 'alpine' scp -p ./untethered root@localhost:'/./Library/MobileSubstrate/DynamicLibraries/untethered.dylib';
-		sshpass -p 'alpine' scp -p ./untetheredplist root@localhost:'/./Library/MobileSubstrate/DynamicLibraries/untethered.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod 00755 /./Library/MobileSubstrate/DynamicLibraries/untethered.dylib';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'cd /System/Library && launchctl unload LaunchDaemons/com.apple.mobile.lockdown.plist && launchctl unload LaunchDaemons/com.apple.mobileactivationd.plist && launchctl load LaunchDaemons/com.apple.mobile.lockdown.plist && launchctl load LaunchDaemons/com.apple.mobileactivationd.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'uicache --respring && killall SpringBoard mobileactivationd';
-		idevicepair pair;
-		sleep 5;
-		sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'find /./private/var/containers/Data/System -iname "internal" >>/guid'
-		sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && mv /./flag $GUI/'
-		sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && mv /./unflag $GUI/'
-		sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && cd $GUI/ && chmod 00755 unflag && ./unflag'
-		sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && cd $GUI/ && chmod 00755 flag && ./flag'
-		sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && cd $GUI/../ && mkdir activation_records'
-		ActivationState=$(ideviceinfo | grep ActivationState: | awk '{print $NF}');
-		DeviceName=$(ideviceinfo | grep DeviceName | awk '{print $NF}');
-		UniqueDeviceID=$(ideviceinfo | grep UniqueDeviceID | awk '{print $NF}');
-		SerialNumber=$(ideviceinfo | grep -w SerialNumber | awk '{print $NF}');
-		ProductType=$(ideviceinfo | grep ProductType | awk '{print $NF}');
-		ProductVersion=$(ideviceinfo | grep ProductVersion | awk '{print $NF}');
-		imei=$(ideviceinfo | grep InternationalMobileEquipmentIdentity | awk '{print $NF}');
-		meid=$(ideviceinfo | grep MobileEquipmentIdentifier | awk '{print $NF}');
-		me=$(if test -z "$meid"; then echo '	"MobileEquipmentIdentifier" = "'$meid'";'; else sleep 1;fi);
-echo '
-{
-	"InternationalMobileEquipmentIdentity" = "'$imei'";'$me'
-	"SerialNumber" = "'$SerialNumber'";
-	"InternationalMobileSubscriberIdentity" = "";
-	"ProductType" = "'$ProductType'";
-	"UniqueDeviceID" = "'$UniqueDeviceID'";
-	"ActivationRandomness" = "1A0CC786-CE38-4D31-BDFD-1FB4483AE4F8";
-	"ActivityURL" = "https://albert.apple.com/deviceservices/activity";
-	"IntegratedCircuitCardIdentity" = "";
-	"CertificateURL" = "https://albert.apple.com/deviceservices/certifyMe";
-	"PhoneNumberNotificationURL" = "https://albert.apple.com/deviceservices/phoneHome";
-	"WildcardTicket" = "MIICogIBATALBgkqhkiG9w0BAQsxaJ8/BCIpOuefQAThUH8An0sU8u7ynkFtjU5iK7LCVPXvf1IsCsqfh20HNWFRCSOYRJ+XPQwAAAAA7u7u7u7u7u+flz4EAAAAAJ+XPwQBAAAAn5dABAEAAACfl0EEAQAAAJ+XTAQAAAAABIIBADqStNCOV64BLCKVls72U5Bwh8qTJHwaQtkPjUj/wh3RbtC45BoDNebydW4RmSefowABaXRYFfGFhuyXHxfQyxre5gDMh6CftLMQdSuE0tLHw+Kki0me5xFxBFHtwQdt/fgd1VRnNUI8zokLGfjm4N8V3A6oMvnDwZLlZMci7jPhDOk7OW2P6XD0RCirK6kaYMQEgJdPr5lCUJRv2ywc0URrGMWNvU759pObUPjHgIvqNXY+7MeLi3vKqRpft7beOwDohoo1e1+GVQVGYP7qYYmNBMJlLFO75h8bDaSMc3a5MfDgwDekbZn7Q0ZiQ2TPHB/FQSsbfphSRWfnmr9b3/mjggEgMAsGCSqGSIb3DQEBAQOCAQ8AMIIBCgKCAQEArJFPRdnc/E7Vgatg/AHbKnGEudR+ug8WZghxMOlPad3fL42hHAXReVRcBE5liQXEyaP0ojy3s3QJhuNEXwLMYOLCKJNAj4SrE6dZqJ9CQamouvEnZjdC/gLBG5jSuAI4zF+hjObe8OZnV6YGcooEbRkA51dj+x5zmY+vT0va/w+EOdAiTWi6xiWdVFQTXCpCTUzA9qcax58XUi04+dcVSEwVO9U3ZeyoIUrJD/FmoDjjZOidCHDgsCGlnLfQP/gLKOMpOfzw4dWFIW1IiDvs9Uy+U3YhyyE4HPDVx2oAf8ojhBMzsdqXGVV148H0mZSkR4+ulZVlR4E/mxB2ZdP7HQIDAQAB";
-}' >>./tokenpre
-		sleep 4
-		base64 ./tokenpre &>>./tokenfinal&
-		sleep 3
-		token=$(cat ./tokenfinal)
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'mount -o rw,union,update /';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'snappy -f / -r `snappy -f / -l | sed -n 2p` -t orig-fs';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /usr/libexec/substrate /usr/libexec/substrated /usr/bin/cycc /usr/bin/cynject /./Library/Frameworks/* /usr/lib/cycript0.9 /usr/lib/libsubstrate.dylib /Library/MobileSubstrate /usr/include/substrate.h /usr/lib/substrate';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'cp -rp /./System/Library/PrivateFrameworks/MobileActivation.framework/Support/Certificates/FactoryActivation.pem /./System/Library/PrivateFrameworks/MobileActivation.framework/Support/Certificates/RaptorActivation.pem';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /private/var/mobile/Library/Preferences/*purplebuddy*';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'find /./private/var/containers/Data/System -iname "internal" >>/guid';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'GUI=$(cat /guid) && rm -rf $GUI/../activation_records';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'GUI=$(cat /guid) && rm -rf $GUI && rm /guid';
+		#sshpass -p 'alpine' scp -p ./uikit root@localhost:'/./';
+sshpass -p 'alpine' scp -p ./lzma root@localhost:'/./usr/bin/';
+sshpass -p 'alpine' scp -p ./plutil root@localhost:'/./usr/bin/';
+		#sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'tar -xvf /./uikit -C /./';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod -R 00777 /usr/bin';
+sshpass -p 'alpine' scp -p ./boot root@localhost:'/./boot.tar.lzma';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'lzma -d -v /./boot.tar.lzma'; 
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'tar -xvf /./boot.tar -C /./';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'BasebandON && rm /./boot.tar';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod 0777 /usr/libexec/*subs*';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost '/usr/libexec/substrate';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost '/usr/libexec/substrated';
+sshpass -p 'alpine' scp -p ./untethered root@localhost:'/./Library/MobileSubstrate/DynamicLibraries/untethered.dylib';
+sshpass -p 'alpine' scp -p ./untetheredplist root@localhost:'/./Library/MobileSubstrate/DynamicLibraries/untethered.plist';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod 00777 /./Library/MobileSubstrate/DynamicLibraries/untethered.dylib';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'cd /System/Library && launchctl unload LaunchDaemons/com.apple.mobile.lockdown.plist && launchctl unload LaunchDaemons/com.apple.mobileactivationd.plist && launchctl load LaunchDaemons/com.apple.mobile.lockdown.plist && launchctl load LaunchDaemons/com.apple.mobileactivationd.plist';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'key=$(uicache --respring && killall SpringBoard); if test -z "$key"; then killall HUD SpringBoard mobileactivationd; else echo '' >>/dev/nul; fi';
+idevicepair pair;
+sleep 5;
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'find /./private/var/containers/Data/System -iname "internal" >>/guid'
+		#sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && mv /./flag $GUI/'
+		#sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && mv /./unflag $GUI/'
+		#sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && cd $GUI/ && chmod 00755 unflag && ./unflag'
+		#sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && cd $GUI/ && chmod 00755 flag && ./flag'
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "internal"); chflags -R nouchg $key';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "internal"); plutil -"-BootSessionRTCResetCount" -remove $key/data_ark.plist';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "internal"); plutil -"-BootSessionUUID" -remove $key/data_ark.plist';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "internal"); plutil -"-BrickState" -remove $key/data_ark.plist';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "internal"); plutil -"-TotalRTCResetCount" -remove $key/data_ark.plist';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "internal"); plutil -"-UIKLegacyMigrationCompleted" -remove $key/data_ark.plist';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "internal"); plutil -"-ActivationState" -remove $key/data_ark.plist';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "data_ark.plist"); chflags -R nouchg $key/../internal';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'find /private/var/containers/Data/System -iname "internal" >>/guid';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && cd $GUI/../ && mkdir -p activation_records'
+ActivationState=$(ideviceinfo | grep ActivationState: | awk '{print $NF}');
+DeviceName=$(ideviceinfo | grep DeviceName | awk '{print $NF}');
+UniqueDeviceID=$(ideviceinfo | grep UniqueDeviceID | awk '{print $NF}');
+SerialNumber=$(ideviceinfo | grep -w SerialNumber | awk '{print $NF}');
+ProductType=$(ideviceinfo | grep ProductType | awk '{print $NF}');
+ProductVersion=$(ideviceinfo | grep ProductVersion | awk '{print $NF}');
+imei=$(ideviceinfo | grep InternationalMobileEquipmentIdentity | awk '{print $NF}');
+meid=$(ideviceinfo | grep MobileEquipmentIdentifier | awk '{print $NF}');
+me=$(if test -z "$meid"; then sleep 1; else echo '"MobileEquipmentIdentifier" = "'$meid'";';fi);
+echo '{	"InternationalMobileEquipmentIdentity" = "'$imei'";'$me'	"SerialNumber" = "'$SerialNumber'";	"ProductType" = "'$ProductType'";	"UniqueDeviceID" = "'$UniqueDeviceID'";	"ActivationRandomness" = "1A0CC786-CE38-4D31-BDFD-1FB4483AE4F8";	"ActivityURL" = "https://albert.apple.com/deviceservices/activity";	"CertificateURL" = "https://albert.apple.com/deviceservices/certifyMe";	"PhoneNumberNotificationURL" = "https://albert.apple.com/deviceservices/phoneHome";	"WildcardTicket" = "MIICogIBATALBgkqhkiG9w0BAQsxaJ8/BCIpOuefQAThUH8An0sU8u7ynkFtjU5iK7LCVPXvf1IsCsqfh20HNWFRCSOYRJ+XPQwAAAAA7u7u7u7u7u+flz4EAAAAAJ+XPwQBAAAAn5dABAEAAACfl0EEAQAAAJ+XTAQAAAAABIIBADqStNCOV64BLCKVls72U5Bwh8qTJHwaQtkPjUj/wh3RbtC45BoDNebydW4RmSefowABaXRYFfGFhuyXHxfQyxre5gDMh6CftLMQdSuE0tLHw+Kki0me5xFxBFHtwQdt/fgd1VRnNUI8zokLGfjm4N8V3A6oMvnDwZLlZMci7jPhDOk7OW2P6XD0RCirK6kaYMQEgJdPr5lCUJRv2ywc0URrGMWNvU759pObUPjHgIvqNXY+7MeLi3vKqRpft7beOwDohoo1e1+GVQVGYP7qYYmNBMJlLFO75h8bDaSMc3a5MfDgwDekbZn7Q0ZiQ2TPHB/FQSsbfphSRWfnmr9b3/mjggEgMAsGCSqGSIb3DQEBAQOCAQ8AMIIBCgKCAQEArJFPRdnc/E7Vgatg/AHbKnGEudR+ug8WZghxMOlPad3fL42hHAXReVRcBE5liQXEyaP0ojy3s3QJhuNEXwLMYOLCKJNAj4SrE6dZqJ9CQamouvEnZjdC/gLBG5jSuAI4zF+hjObe8OZnV6YGcooEbRkA51dj+x5zmY+vT0va/w+EOdAiTWi6xiWdVFQTXCpCTUzA9qcax58XUi04+dcVSEwVO9U3ZeyoIUrJD/FmoDjjZOidCHDgsCGlnLfQP/gLKOMpOfzw4dWFIW1IiDvs9Uy+U3YhyyE4HPDVx2oAf8ojhBMzsdqXGVV148H0mZSkR4+ulZVlR4E/mxB2ZdP7HQIDAQAB";	}' >>./tokenpre;
+sleep 4;
+base64 ./tokenpre &>>./tokenfinal&
+sleep 3;
+token=$(cat ./tokenfinal);
 echo '<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -209,57 +203,60 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 	<key>unbrick</key>
 	<true/>
 </dict>
-</plist>' >>./activ
-		sleep 3
-		sshpass -p 'alpine' scp -p ./activ root@localhost:/./
-		sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) &&  chflags nouchg $GUI/../activation_records/activation_record.plist'
-		sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) &&  mv /./activ $GUI/../activation_records/activation_record.plist'
-		sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && chmod 00666 $GUI/../activation_records/activation_record.plist'
-		sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && chown mobile $GUI/../activation_records/activation_record.plist'
-		sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && plutil -binary $GUI/../activation_records/activation_record.plist'
-		sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && chflags uchg $GUI/../activation_records/activation_record.plist'
-		sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'rm /guid'
-		sleep 5;
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /./Library/MobileSubstrate/DynamicLibraries/*';
-		sshpass -p 'alpine' scp -p ./iuntethered root@localhost:'/./Library/MobileSubstrate/DynamicLibraries/iuntethered.dylib';
-		sshpass -p 'alpine' scp -p ./iuntetheredplist root@localhost:'/./Library/MobileSubstrate/DynamicLibraries/iuntethered.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod 00755 /./Library/MobileSubstrate/DynamicLibraries/iuntethered.dylib';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'cd /System/Library && launchctl unload LaunchDaemons*';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chflags nouchg /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'plutil -kPostponementTicket -remove /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'plutil -dict -kPostponementTicket /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'plutil -kPostponementTicket -ActivationState -string Activated /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'plutil -kPostponementTicket -ActivityURL -string https://albert.apple.com/deviceservices/activity /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'plutil -kPostponementTicket -PhoneNumberNotificationURL -string https://albert.apple.com/deviceservices/phoneHome /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'plutil -kPostponementTicket -ActivationTicket -string "MIICogIBATALBgkqhkiG9w0BAQsxaJ8/BCIpOuefQAThUH8An0sU8u7ynkFtjU5iK7LCVPXvf1IsCsqfh20HNWFRCSOYRJ+XPQwAAAAA7u7u7u7u7u+flz4EAAAAAJ+XPwQBAAAAn5dABAEAAACfl0EEAQAAAJ+XTAQAAAAABIIBADqStNCOV64BLCKVls72U5Bwh8qTJHwaQtkPjUj/wh3RbtC45BoDNebydW4RmSefowABaXRYFfGFhuyXHxfQyxre5gDMh6CftLMQdSuE0tLHw+Kki0me5xFxBFHtwQdt/fgd1VRnNUI8zokLGfjm4N8V3A6oMvnDwZLlZMci7jPhDOk7OW2P6XD0RCirK6kaYMQEgJdPr5lCUJRv2ywc0URrGMWNvU759pObUPjHgIvqNXY+7MeLi3vKqRpft7beOwDohoo1e1+GVQVGYP7qYYmNBMJlLFO75h8bDaSMc3a5MfDgwDekbZn7Q0ZiQ2TPHB/FQSsbfphSRWfnmr9b3/mjggEgMAsGCSqGSIb3DQEBAQOCAQ8AMIIBCgKCAQEArJFPRdnc/E7Vgatg/AHbKnGEudR+ug8WZghxMOlPad3fL42hHAXReVRcBE5liQXEyaP0ojy3s3QJhuNEXwLMYOLCKJNAj4SrE6dZqJ9CQamouvEnZjdC/gLBG5jSuAI4zF+hjObe8OZnV6YGcooEbRkA51dj+x5zmY+vT0va/w+EOdAiTWi6xiWdVFQTXCpCTUzA9qcax58XUi04+dcVSEwVO9U3ZeyoIUrJD/FmoDjjZOidCHDgsCGlnLfQP/gLKOMpOfzw4dWFIW1IiDvs9Uy+U3YhyyE4HPDVx2oAf8ojhBMzsdqXGVV148H0mZSkR4+ulZVlR4E/mxB2ZdP7HQIDAQAB" /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'cd /System/Library && launchctl load LaunchDaemons*';
-		sshpass -p 'alpine' scp -p ./purplebuddy root@localhost:'/./private/var/mobile/Library/Preferences/com.apple.purplebuddy.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chown mobile /./private/var/mobile/Library/Preferences/com.apple.purplebuddy.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod 00600 /./private/var/mobile/Library/Preferences/com.apple.purplebuddy.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'uicache --all';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chflags uchg /./private/var/mobile/Library/Preferences/com.apple.purplebuddy.plist';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'find /./private/var/containers/Data/System -iname "data_ark.plist" >>/guid';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'GUI=$(cat /guid) && plutil -key ActivationState -remove $GUI';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'GUI=$(cat /guid) && plutil -"-ActivationState" -remove $GUI';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'GUI=$(cat /guid) && plutil -"-UCRTOOBForbidden" -remove $GUI';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'GUI=$(cat /guid) && plutil -ActivationState -string Activated $GUI';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'GUI=$(cat /guid) && plutil -binary $GUI';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'GUI=$(cat /guid) && chflags uchg $GUI';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /usr/libexec/substrate';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /usr/libexec/substrated';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /usr/bin/cycc';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /usr/bin/cynject';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /./Library/Frameworks/*';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /usr/lib/cycript0.9';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /usr/lib/libsubstrate.dylib';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /./Library/MobileSubstrate';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /usr/include/substrate.h';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /usr/lib/substrate';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /guid';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'BasebandOFF && rm -rf /./private/var/mobile/Library/Logs/mobileactivationd';
-		sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'uicache --all && killall backboardd';
-		read -p 'CONCLUIDO';
-		
+</plist>' >>./activ;
+sleep 3;
+sshpass -p 'alpine' scp -p ./activ root@localhost:/./;
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && chflags nouchg $GUI/../activation_records'
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && mv /./activ $GUI/../activation_records/activation_record.plist';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && chmod 00666 $GUI/../activation_records/activation_record.plist';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && chown mobile $GUI/../activation_records/activation_record.plist';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && plutil -binary $GUI/../activation_records/activation_record.plist';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && chflags uchg $GUI/../activation_records/activation_record.plist';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'rm /guid';
+sleep 5;
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /./Library/MobileSubstrate/DynamicLibraries/*';
+sshpass -p 'alpine' scp -p ./iuntethered root@localhost:'/./Library/MobileSubstrate/DynamicLibraries/iuntethered.dylib';
+sshpass -p 'alpine' scp -p ./iuntetheredplist root@localhost:'/./Library/MobileSubstrate/DynamicLibraries/iuntethered.plist';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod 00755 /./Library/MobileSubstrate/DynamicLibraries/iuntethered.dylib';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'cd /System/Library && launchctl unload -w -F LaunchDaemons*';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chflags nouchg /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'plutil -kPostponementTicket -remove /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'plutil -dict -kPostponementTicket /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'plutil -kPostponementTicket -ActivationState -string Activated /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'plutil -kPostponementTicket -ActivityURL -string https://albert.apple.com/deviceservices/activity /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'plutil -kPostponementTicket -PhoneNumberNotificationURL -string https://albert.apple.com/deviceservices/phoneHome /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'plutil -kPostponementTicket -ActivationTicket -string "MIICogIBATALBgkqhkiG9w0BAQsxaJ8/BCIpOuefQAThUH8An0sU8u7ynkFtjU5iK7LCVPXvf1IsCsqfh20HNWFRCSOYRJ+XPQwAAAAA7u7u7u7u7u+flz4EAAAAAJ+XPwQBAAAAn5dABAEAAACfl0EEAQAAAJ+XTAQAAAAABIIBADqStNCOV64BLCKVls72U5Bwh8qTJHwaQtkPjUj/wh3RbtC45BoDNebydW4RmSefowABaXRYFfGFhuyXHxfQyxre5gDMh6CftLMQdSuE0tLHw+Kki0me5xFxBFHtwQdt/fgd1VRnNUI8zokLGfjm4N8V3A6oMvnDwZLlZMci7jPhDOk7OW2P6XD0RCirK6kaYMQEgJdPr5lCUJRv2ywc0URrGMWNvU759pObUPjHgIvqNXY+7MeLi3vKqRpft7beOwDohoo1e1+GVQVGYP7qYYmNBMJlLFO75h8bDaSMc3a5MfDgwDekbZn7Q0ZiQ2TPHB/FQSsbfphSRWfnmr9b3/mjggEgMAsGCSqGSIb3DQEBAQOCAQ8AMIIBCgKCAQEArJFPRdnc/E7Vgatg/AHbKnGEudR+ug8WZghxMOlPad3fL42hHAXReVRcBE5liQXEyaP0ojy3s3QJhuNEXwLMYOLCKJNAj4SrE6dZqJ9CQamouvEnZjdC/gLBG5jSuAI4zF+hjObe8OZnV6YGcooEbRkA51dj+x5zmY+vT0va/w+EOdAiTWi6xiWdVFQTXCpCTUzA9qcax58XUi04+dcVSEwVO9U3ZeyoIUrJD/FmoDjjZOidCHDgsCGlnLfQP/gLKOMpOfzw4dWFIW1IiDvs9Uy+U3YhyyE4HPDVx2oAf8ojhBMzsdqXGVV148H0mZSkR4+ulZVlR4E/mxB2ZdP7HQIDAQAB" /private/var/wireless/Library/Preferences/com.apple.commcenter.device_specific_nobackup.plist';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'cd /System/Library && launchctl load -w -F LaunchDaemons*';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chflags nouchg /./private/var/mobile/Library/Preferences/com.apple.purplebuddy.plist';
+sshpass -p 'alpine' scp -p ./purplebuddy root@localhost:'/./private/var/mobile/Library/Preferences/com.apple.purplebuddy.plist';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chown mobile /./private/var/mobile/Library/Preferences/com.apple.purplebuddy.plist';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod 00600 /./private/var/mobile/Library/Preferences/com.apple.purplebuddy.plist';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'uicache --all';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chflags uchg /./private/var/mobile/Library/Preferences/com.apple.purplebuddy.plist';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "data_ark.plist"); build=$(ls /private/var/root/Library/Caches/com.apple.coresymbolicationd); plutil -"-BuildVersion" -string $build $key';	
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "data_ark.plist"); build=$(ls /private/var/root/Library/Caches/com.apple.coresymbolicationd); plutil -"-LastActivated" -string $build $key';	
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "data_ark.plist"); build=$(ls /private/var/root/Library/Caches/com.apple.coresymbolicationd); plutil -"-ActivationState" -remove $key';	
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "data_ark.plist"); build=$(ls /private/var/root/Library/Caches/com.apple.coresymbolicationd); plutil -"-BrickState" -remove $key';	
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "data_ark.plist"); build=$(ls /private/var/root/Library/Caches/com.apple.coresymbolicationd); plutil -"-ActivationState" -string Activated $key';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "data_ark.plist"); build=$(ls /private/var/root/Library/Caches/com.apple.coresymbolicationd); plutil -"-BrickState" -0 -false $key';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "data_ark.plist"); plutil -binary $key';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "data_ark.plist"); chflags -R uchg $key/../internal';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /usr/libexec/substrate';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /usr/libexec/substrated';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /usr/bin/cycc';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /usr/bin/cynject';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /./Library/Frameworks/*';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /usr/lib/cycript0.9';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /usr/lib/libsubstrate.dylib';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /./Library/MobileSubstrate';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /usr/include/substrate.h';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /usr/lib/substrate';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm /guid';
+#LA DESACTIVACIÓN DE LA BANDA BASE AFECTA EN LA DURACIÓN DE LA BATERÍA, SI NO QUIERE QUE OCURRA ESTO ELIMINE LA LINEA BasebandOFF
+#DESPUÉS DE ELIMINAR ESA LINEA CARGUE LOS DEMONIOS DE COMMCENTER Y ATIVE EL MODO AVIÓN.
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'BasebandOFF';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'uicache --all && killall backboardd';
+read -p 'CONCLUIDO';
 		
 }
 Inicio
