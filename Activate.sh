@@ -46,6 +46,7 @@ sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /usr/
 sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'cp -rp /./System/Library/PrivateFrameworks/MobileActivation.framework/Support/Certificates/FactoryActivation.pem /./System/Library/PrivateFrameworks/MobileActivation.framework/Support/Certificates/RaptorActivation.pem';
 sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'rm -rf /private/var/mobile/Library/Preferences/*purplebuddy*';
 sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'find /./private/var/containers/Data/System -iname "internal" >>/guid';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'GUI=$(cat /guid) && chflags -R nouchg $GUI/../*';
 sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'GUI=$(cat /guid) && rm -rf $GUI/../activation_records';
 sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'GUI=$(cat /guid) && rm -rf $GUI && rm /guid';
 		#sshpass -p 'alpine' scp -p ./uikit root@localhost:'/./';
@@ -58,7 +59,7 @@ sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'lzma -d -v /
 sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'tar -xvf /./boot.tar -C /./';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'chmod -R 00755 /usr/bin';
 sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'BasebandON && rm /./boot.tar';
-sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod 0777 /usr/libexec/*subs*';
+sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'chmod 0777 /usr/libexec/subs*';
 sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost '/usr/libexec/substrate';
 sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost '/usr/libexec/substrated';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'res=$(uicache --respring && killall backboardd); if test -z "$res"; then killall HUD SpringBoard; else echo "";fi';
@@ -70,7 +71,7 @@ sshpass -p 'alpine' ssh -o StricthostKeyChecking=no root@localhost 'key=$(uicach
 idevicepair pair;
 
 #Si tiene un servidor de Hacktivación, genere su activation_record.plist en este punto. 
-#Si lo hace omita las lineas que lo generan.
+#Si lo hace, omita las lineas que lo generan.
 sleep 5;
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'find /./private/var/containers/Data/System -iname "internal" >>/guid'
 		#sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && mv /./flag $GUI/'
