@@ -1,0 +1,33 @@
+#SCRIPT BASH CREATED BY: Brayan Villa ( EX3cutioN3R )
+
+#Download Git-Bash for Windows (Obligatory)
+#Descargue Git-Bash para Windows (Obligatorio)
+===================================================ENGLISH===================================================
+If you benefit from my work and effort, consider making a donation to:
+
+-My brother's PayPal: minecraftcreper46@gmail.com
+
+-Transfer: 4766 8410 8989 1793
+  Bank: Banamex
+  User: Brayan Villa
+
+If you collaborate with a donation and have any questions, do not hesitate to send me a message to:
+
+My Telegram: +52 477 555 1396
+
+If you want to transcribe the code to CSharp language (C #) Contact me by Telegram
+
+===================================================ESPAÑOL===================================================
+Si se beneficia de mi trabajo y esfuerzo considere hacer una donación a:
+
+-PayPal de mi hermano: minecraftcreper46@gmail.com
+
+-Transferencia: 4766 8410 8989 1793 
+ Banco: Banamex 
+ Usuario: Brayan Villa
+
+Si usted colabora con una donación y tiene alguna duda no dude en enviarme mensaje a:
+
+Mi Telegram: +52 477 555 1396
+
+Si quiere transcribir el codigo a lenguaje CSharp (C#) Contacteme por Telegram
