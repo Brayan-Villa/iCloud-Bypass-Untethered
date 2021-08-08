@@ -13,24 +13,31 @@ function point2()
     then
 		  idevicepair pair &>>/dev/nul& echo 'TU DISPOSITIVO NO HA SIDO DETECTADO, SE INTENTARÁ PAREAR CON LA PC';
 		  echo 'SI TU DISPOSITIVO ESTÁ CONECTADO, PRECIONA CONFIAR EN CASO DE QUE SE TE SOLICITE';sleep 3;point1
+echo '';
+		  echo 'YOUR DEVICE HAS NOT BEEN DETECTED, IT WILL TRY TO STOP WITH THE PC ';
+		  echo 'IF YOUR DEVICE IS CONNECTED, PRICE TO TRUST IN CASE YOU ARE REQUESTED';sleep 3;point1
     else
 		 rm ~/.ssh/known_hosts&&iproxy 22 44 &>>/dev/nul&
-		  echo '¡DISPOSITIVO DETECTADO CON ÉXITO!';
+		  echo '¡DISPOSITIVO DETECTADO CON ÉXITO!';echo '';echo 'DEVICE DETECTED SUCCESSFULLY!';
 		  sleep 3; clear;
-		  echo 'INTENTANDO MOSTRAR DATOS DEL iDEVICE';
+		  echo 'INTENTANDO MOSTRAR DATOS DEL iDEVICE';echo '';echo 'TRYING TO DISPLAY DATA FROM iDEVICE';
 		  sleep 2; echo ''; echo '';
-		  echo 'Estado de Activación:  '$AS'';
-		  echo 'Numero de Serie:       '$SN'';
-		  echo 'IMEI:                  '$IM'';
-		  echo 'UniqueDeviceID:        '$UD''; echo '';
-		  read -p 'PRECIONA ENTER PARA INICIAR EL PROCESO';
+		  echo 'Estado de Activación:	'$AS'';
+		  echo 'Numero de Serie:	'$SN'';
+		  echo 'IMEI:			'$IM'';
+		  echo 'UniqueDeviceID:		'$UD''; echo '';
+		  echo 'Activation Status:	'$AS '';
+		  echo 'Serial Number:		'$SN '';
+		  echo 'IMEI:			'$IM '';
+		  echo 'UniqueDeviceID:		'$UD '';
+		  read -p 'PRECIONA ENTER PARA INICIAR EL PROCESO	 PRESS ENTER TO START THE PROCESS';
    fi      
 }
-echo "VERIFICANDO INSTALACIÓN DE DEPENDENCIAS";  sleep 3; clear;
+echo "VERIFICANDO INSTALACIÓN DE DEPENDENCIAS"; echo ''; echo "VERIFYING DEPENDENCE INSTALLATION"; sleep 3; clear;
 Check=$(find /usr/bin -iname "LibimobiledeviceEXE");
 if test -z "$Check"; 
   then
-    echo 'DESCARGANDO DEPENDENCIAS NECESARIAS'; sleep 2; echo '==============================================';
+    echo 'DESCARGANDO DEPENDENCIAS NECESARIAS'; echo '';echo 'DOWNLOADING NECESSARY DEPENDENCES'; sleep 2; echo '==============================================';
     cd /usr/bin/ && git clone https://github.com/Brayan-Villa/LibimobiledeviceEXE; 
     cd /usr/bin/LibimobiledeviceEXE/ && mv ./* ../;
     echo '=============================================='; echo '';
