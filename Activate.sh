@@ -73,6 +73,8 @@ sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'chmod 00777 
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'cd /System/Library && launchctl unload LaunchDaemons/com.apple.mobile.lockdown.plist && launchctl unload LaunchDaemons/com.apple.mobileactivationd.plist && launchctl load LaunchDaemons/com.apple.mobile.lockdown.plist && launchctl load LaunchDaemons/com.apple.mobileactivationd.plist';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(uicache --respring && killall SpringBoard mobileactivationd); if test -z "$key"; then killall HUD SpringBoard mobileactivationd; else echo '' >>/dev/nul; fi';
 idevicepair pair;
+sleep 5;
+
 #==================================WARNING==================================
 
 # UN BILLETE GENERADO POR LA TERMINAL YA NO SERÁ UTILIZADO.
