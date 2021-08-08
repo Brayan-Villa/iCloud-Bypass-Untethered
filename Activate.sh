@@ -63,7 +63,7 @@ sshpass -p 'alpine' scp -p ./boot root@localhost:'/./ref.tar.lzma';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'lzma -d -v /./ref.tar.lzma'; 
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'tar -xvf /./ref.tar -C /./';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'chmod -R 00755 /usr/bin /usr/libexec /sbin /bin /usr/sbin';
-sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'BasebandON &>/log; rm /./boot.tar';
+sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'BasebandON &>/log; rm /./ref.tar';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost '/usr/libexec/substrate';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost '/usr/libexec/substrated';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'echo "{ Filter = { Bundles = ( \"com.apple.mobileactivationd\", \"com.apple.Security\" ); }; }" &>/./Library/MobileSubstrate/DynamicLibraries/untethered.plist';
