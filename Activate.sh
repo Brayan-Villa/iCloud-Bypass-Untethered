@@ -72,12 +72,9 @@ idevicepair pair;
 
 #Si tiene un servidor de Hacktivación, genere su activation_record.plist en este punto. 
 #Si lo hace, omita las lineas que lo generan.
+
 sleep 5;
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'find /./private/var/containers/Data/System -iname "internal" >>/guid'
-		#sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && mv /./flag $GUI/'
-		#sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && mv /./unflag $GUI/'
-		#sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && cd $GUI/ && chmod 00755 unflag && ./unflag'
-		#sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && cd $GUI/ && chmod 00755 flag && ./flag'
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "internal"); chflags -R nouchg $key';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "internal"); plutil -"-BootSessionRTCResetCount" -remove $key/data_ark.plist';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "internal"); plutil -"-BootSessionUUID" -remove $key/data_ark.plist';
@@ -85,131 +82,20 @@ sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "internal"); plutil -"-TotalRTCResetCount" -remove $key/data_ark.plist';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "internal"); plutil -"-UIKLegacyMigrationCompleted" -remove $key/data_ark.plist';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "internal"); plutil -"-ActivationState" -remove $key/data_ark.plist && rm /guid';
-#sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'key=$(find /private/var/containers/Data/System -iname "data_ark.plist"); chflags -R nouchg $key/../internal';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'find /private/var/containers/Data/System -iname "internal" >>/guid';
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && cd $GUI/../ && mkdir -p activation_records'
-ActivationState=$(ideviceinfo | grep ActivationState: | awk '{print $NF}');
-DeviceName=$(ideviceinfo | grep DeviceName | awk '{print $NF}');
-UniqueDeviceID=$(ideviceinfo | grep UniqueDeviceID | awk '{print $NF}');
-SerialNumber=$(ideviceinfo | grep -w SerialNumber | awk '{print $NF}');
-ProductType=$(ideviceinfo | grep ProductType | awk '{print $NF}');
-ProductVersion=$(ideviceinfo | grep ProductVersion | awk '{print $NF}');
-imei=$(ideviceinfo | grep InternationalMobileEquipmentIdentity | awk '{print $NF}');
-meid=$(ideviceinfo | grep MobileEquipmentIdentifier | awk '{print $NF}');
-me=$(if test -z "$meid"; then sleep 1; else echo '"MobileEquipmentIdentifier" = "'$meid'";';fi);
-echo '{	"InternationalMobileEquipmentIdentity" = "'$imei'";'$me'	"SerialNumber" = "'$SerialNumber'";	"ProductType" = "'$ProductType'";	"UniqueDeviceID" = "'$UniqueDeviceID'";	"ActivationRandomness" = "1A0CC786-CE38-4D31-BDFD-1FB4483AE4F8";	"ActivityURL" = "https://albert.apple.com/deviceservices/activity";	"CertificateURL" = "https://albert.apple.com/deviceservices/certifyMe";	"PhoneNumberNotificationURL" = "https://albert.apple.com/deviceservices/phoneHome";	"WildcardTicket" = "MIICogIBATALBgkqhkiG9w0BAQsxaJ8/BCIpOuefQAThUH8An0sU8u7ynkFtjU5iK7LCVPXvf1IsCsqfh20HNWFRCSOYRJ+XPQwAAAAA7u7u7u7u7u+flz4EAAAAAJ+XPwQBAAAAn5dABAEAAACfl0EEAQAAAJ+XTAQAAAAABIIBADqStNCOV64BLCKVls72U5Bwh8qTJHwaQtkPjUj/wh3RbtC45BoDNebydW4RmSefowABaXRYFfGFhuyXHxfQyxre5gDMh6CftLMQdSuE0tLHw+Kki0me5xFxBFHtwQdt/fgd1VRnNUI8zokLGfjm4N8V3A6oMvnDwZLlZMci7jPhDOk7OW2P6XD0RCirK6kaYMQEgJdPr5lCUJRv2ywc0URrGMWNvU759pObUPjHgIvqNXY+7MeLi3vKqRpft7beOwDohoo1e1+GVQVGYP7qYYmNBMJlLFO75h8bDaSMc3a5MfDgwDekbZn7Q0ZiQ2TPHB/FQSsbfphSRWfnmr9b3/mjggEgMAsGCSqGSIb3DQEBAQOCAQ8AMIIBCgKCAQEArJFPRdnc/E7Vgatg/AHbKnGEudR+ug8WZghxMOlPad3fL42hHAXReVRcBE5liQXEyaP0ojy3s3QJhuNEXwLMYOLCKJNAj4SrE6dZqJ9CQamouvEnZjdC/gLBG5jSuAI4zF+hjObe8OZnV6YGcooEbRkA51dj+x5zmY+vT0va/w+EOdAiTWi6xiWdVFQTXCpCTUzA9qcax58XUi04+dcVSEwVO9U3ZeyoIUrJD/FmoDjjZOidCHDgsCGlnLfQP/gLKOMpOfzw4dWFIW1IiDvs9Uy+U3YhyyE4HPDVx2oAf8ojhBMzsdqXGVV148H0mZSkR4+ulZVlR4E/mxB2ZdP7HQIDAQAB";	}' >>./tokenpre;
-sleep 4;
-base64 ./tokenpre &>>./tokenfinal&
+imei=$(ideviceinfo | grep -w InternationalMobileEquipmentIdentity | awk '{printf $NF}'); 
+Number=$(ideviceinfo | grep -w SerialNumber | awk '{printf $NF}'); 
+ProductType=$(ideviceinfo | grep -w ProductType | awk '{printf $NF}'); 
+meid=(if test -z $(ideviceinfo | grep -w MobileEquipmentIdentifier); then sleep 1; else echo -e \n\t"MobileEquipmentIdentifier" = \"ideviceinfo | grep -w MobileEquipmentIdentifier | awk '{printf $NF}'\"; fi ); 
+uniqueDiviceID=$(ideviceinfo | grep -w UniqueDeviceID | awk '{printf $NF}'); 
+wildcard="MIICogIBATALBgkqhkiG9w0BAQsxaJ8/BCIpOuefQAThUH8An0sU8u7ynkFtjU5iK7LCVPXvf1IsCsqfh20HNWFRCSOYRJ+XPQwAAAAA7u7u7u7u7u+flz4EAAAAAJ+XPwQBAAAAn5dABAEAAACfl0EEAQAAAJ+XTAQAAAAABIIBADqStNCOV64BLCKVls72U5Bwh8qTJHwaQtkPjUj/wh3RbtC45BoDNebydW4RmSefowABaXRYFfGFhuyXHxfQyxre5gDMh6CftLMQdSuE0tLHw+Kki0me5xFxBFHtwQdt/fgd1VRnNUI8zokLGfjm4N8V3A6oMvnDwZLlZMci7jPhDOk7OW2P6XD0RCirK6kaYMQEgJdPr5lCUJRv2ywc0URrGMWNvU759pObUPjHgIvqNXY+7MeLi3vKqRpft7beOwDohoo1e1+GVQVGYP7qYYmNBMJlLFO75h8bDaSMc3a5MfDgwDekbZn7Q0ZiQ2TPHB/FQSsbfphSRWfnmr9b3/mjggEgMAsGCSqGSIb3DQEBAQOCAQ8AMIIBCgKCAQEArJFPRdnc/E7Vgatg/AHbKnGEudR+ug8WZghxMOlPad3fL42hHAXReVRcBE5liQXEyaP0ojy3s3QJhuNEXwLMYOLCKJNAj4SrE6dZqJ9CQamouvEnZjdC/gLBG5jSuAI4zF+hjObe8OZnV6YGcooEbRkA51dj+x5zmY+vT0va/w+EOdAiTWi6xiWdVFQTXCpCTUzA9qcax58XUi04+dcVSEwVO9U3ZeyoIUrJD/FmoDjjZOidCHDgsCGlnLfQP/gLKOMpOfzw4dWFIW1IiDvs9Uy+U3YhyyE4HPDVx2oAf8ojhBMzsdqXGVV148H0mZSkR4+ulZVlR4E/mxB2ZdP7HQIDAQAB"; 
+activationRandomness=""; 
+echo -e "{\n\t\"InternationalMobileEquipmentIdentity\" = \""$imei"\";\n\t\"ActivityURL\" = \"https//albertapplecom/deviceservices/activity\";\n\t\"SerialNumber\" = \""$Number"\";\n\t\"ProductType\" = \""$ProductType"\";"$meid"\n\t\"UniqueDeviceID\" = \""$uniqueDiviceID"\";\n\t\"WildcardTicket\" = \""$wildcard"\";\n\t\"ActivationRandomness\" = \"1A0CC786-CE38-4D31-BDFD-1FB4483AE4F8\";\n\t\"CertificateURL\" = \"https//albertapplecom/deviceservices/certifyMe\";\n\t\"PhoneNumberNotificationURL\" = \"https//albertapplecom/deviceservices/phoneHome\";\n}" &>./AccountToken.decode.tmp;
+base64 ./AccountToken.decode.tmp &>./AccountToken.crt;	
 sleep 3;
-token=$(cat ./tokenfinal);
-echo '<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>AccountToken</key>
-	<data>
-	'$token'
-	</data>
-	<key>AccountTokenCertificate</key>
-	<data>
-	LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURaekNDQWsrZ0F3SUJBZ0lCQWpB
-	TkJna3Foa2lHOXcwQkFRVUZBREI1TVFzd0NRWURWUVFHRXdKVlV6RVQKTUJFR0ExVUVD
-	aE1LUVhCd2JHVWdTVzVqTGpFbU1DUUdBMVVFQ3hNZFFYQndiR1VnUTJWeWRHbG1hV05o
-	ZEdsdgpiaUJCZFhSb2IzSnBkSGt4TFRBckJnTlZCQU1USkVGd2NHeGxJR2xRYUc5dVpT
-	QkRaWEowYVdacFkyRjBhVzl1CklFRjFkR2h2Y21sMGVUQWVGdzB3TnpBME1UWXlNalUx
-	TURKYUZ3MHhOREEwTVRZeU1qVTFNREphTUZzeEN6QUoKQmdOVkJBWVRBbFZUTVJNd0VR
-	WURWUVFLRXdwQmNIQnNaU0JKYm1NdU1SVXdFd1lEVlFRTEV3eEJjSEJzWlNCcApVR2h2
-	Ym1VeElEQWVCZ05WQkFNVEYwRndjR3hsSUdsUWFHOXVaU0JCWTNScGRtRjBhVzl1TUlH
-	Zk1BMEdDU3FHClNJYjNEUUVCQVFVQUE0R05BRENCaVFLQmdRREZBWHpSSW1Bcm1vaUhm
-	YlMyb1BjcUFmYkV2MGQxams3R2JuWDcKKzRZVWx5SWZwcnpCVmRsbXoySkhZdjErMDRJ
-	ekp0TDdjTDk3VUk3ZmswaTBPTVkwYWw4YStKUFFhNFVnNjExVApicUV0K25qQW1Ba2dl
-	M0hYV0RCZEFYRDlNaGtDN1QvOW83N3pPUTFvbGk0Y1VkemxuWVdmem1XMFBkdU94dXZl
-	CkFlWVk0d0lEQVFBQm80R2JNSUdZTUE0R0ExVWREd0VCL3dRRUF3SUhnREFNQmdOVkhS
-	TUJBZjhFQWpBQU1CMEcKQTFVZERnUVdCQlNob05MK3Q3UnovcHNVYXEvTlBYTlBIKy9X
-	bERBZkJnTlZIU01FR0RBV2dCVG5OQ291SXQ0NQpZR3UwbE01M2cyRXZNYUI4TlRBNEJn
-	TlZIUjhFTVRBdk1DMmdLNkFwaGlkb2RIUndPaTh2ZDNkM0xtRndjR3hsCkxtTnZiUzlo
-	Y0hCc1pXTmhMMmx3YUc5dVpTNWpjbXd3RFFZSktvWklodmNOQVFFRkJRQURnZ0VCQUY5
-	cW1yVU4KZEErRlJPWUdQN3BXY1lUQUsrcEx5T2Y5ek9hRTdhZVZJODg1VjhZL0JLSGhs
-	d0FvK3pFa2lPVTNGYkVQQ1M5Vgp0UzE4WkJjd0QvK2Q1WlFUTUZrbmhjVUp3ZFBxcWpu
-	bTlMcVRmSC94NHB3OE9OSFJEenhIZHA5NmdPVjNBNCs4CmFia29BU2ZjWXF2SVJ5cFhu
-	YnVyM2JSUmhUekFzNFZJTFM2alR5Rll5bVplU2V3dEJ1Ym1taWdvMWtDUWlaR2MKNzZj
-	NWZlREF5SGIyYnpFcXR2eDNXcHJsanRTNDZRVDVDUjZZZWxpblpuaW8zMmpBelJZVHh0
-	UzZyM0pzdlpEaQpKMDcrRUhjbWZHZHB4d2dPKzdidFcxcEZhcjBaakY5L2pZS0tuT1lO
-	eXZDcndzemhhZmJTWXd6QUc1RUpvWEZCCjRkK3BpV0hVRGNQeHRjYz0KLS0tLS1FTkQg
-	Q0VSVElGSUNBVEUtLS0tLQo=
-	</data>
-	<key>AccountTokenSignature</key>
-	<data>
-	raD2OkSpiKa05ol4Af0pmP8R/g6ISCErqNxRJyi/yxShUZ7e0MFRFe7lsILfRxmJD+8E
-	A2ztZSQ+euGLMD7sjyzwlJsY1C6yHAyh+mq1cmLrYas+e/muxO5DyoAGqsb5jTLeM0jS
-	emD9aTA4r8aUbPvScjMIYHqHVMzLyZflZZ4=
-	</data>
-	<key>DeviceCertificate</key>
-	<data>
-	LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM4akNDQWx1Z0F3SUJBZ0lKVTlE
-	eVdEQUlrV0pjTUEwR0NTcUdTSWIzRFFFQkJRVUFNRm94Q3pBSkJnTlYKQkFZVEFsVlRN
-	Uk13RVFZRFZRUUtFd3BCY0hCc1pTQkpibU11TVJVd0V3WURWUVFMRXd4QmNIQnNaU0Jw
-	VUdodgpibVV4SHpBZEJnTlZCQU1URmtGd2NHeGxJR2xRYUc5dVpTQkVaWFpwWTJVZ1Ew
-	RXdIaGNOTWpBd016STVNRGd6Ck9UVXpXaGNOTWpNd016STVNRGd6T1RVeldqQ0JnekV0
-	TUNzR0ExVUVBeFlrUVRnelJFUkROakV0TUVFME5DMDAKUkRNeExVRXlSREl0TmtaRE5V
-	SXlPVGhCUWtRMU1Rc3dDUVlEVlFRR0V3SlZVekVMTUFrR0ExVUVDQk1DUTBFeApFakFR
-	QmdOVkJBY1RDVU4xY0dWeWRHbHViekVUTUJFR0ExVUVDaE1LUVhCd2JHVWdTVzVqTGpF
-	UE1BMEdBMVVFCkN4TUdhVkJvYjI1bE1JR2ZNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0R05B
-	RENCaVFLQmdRRG5sbS96RitETUhQMUQKOEt3VlFKYkVYajhTU0NjWnhSREsrU1NSdytl
-	UnVramd5VGZBd3pqa0poVjJ0YVNWbWdnVDVKWUVBWUdlaXFCcQovajdTV1lWL0ZVK3oz
-	c3lEQTRhMlBMRjdSNFZyVXluOW9xRzg5ajdRS2pON2hpZnp3Y1lFWmhlWmV3bzZoTkVO
-	ClRsVFlFK2RGZDVhOXgwbHhSQjFELzVXcnJtSGxaUUlEQVFBQm80R1ZNSUdTTUI4R0Ex
-	VWRJd1FZTUJhQUZMTCsKSVNORWhwVnFlZFdCSm81ekVOaW5USTUwTUIwR0ExVWREZ1FX
-	QkJTSE42R2FNQlIxeGVPYmc4U2pVNWU0T3FRYwpUakFNQmdOVkhSTUJBZjhFQWpBQU1B
-	NEdBMVVkRHdFQi93UUVBd0lGb0RBZ0JnTlZIU1VCQWY4RUZqQVVCZ2dyCkJnRUZCUWNE
-	QVFZSUt3WUJCUVVIQXdJd0VBWUtLb1pJaHZkalpBWUtBZ1FDQlFBd0RRWUpLb1pJaHZj
-	TkFRRUYKQlFBRGdZRUE1QlI3aktnNFlBUm1GM3ZXVWR1NWRnTnhjd1RoU0hiYU9PNmdQ
-	M25IeWhNU1B1NnIwYmxDcE0vdwpVZkNZZWZVV1Q0WFBXVXZwU2tsaW5QR1JiN01nSG5E
-	WDJRVEM3REFYTTJiOHJiK2E5bTRYQkFFcmZyUVRlbkJJClFWdjI0ajRQSHdpNUd6L0I5
-	QWJ6ZXEyTEw1blMvdmNKMDJ6VzJoUHhqb1lNQjVaU2UrYz0KLS0tLS1FTkQgQ0VSVElG
-	SUNBVEUtLS0tLQo=
-	</data>
-	<key>DeviceConfigurationFlags</key>
-	<string>0</string>
-	<key>FairPlayKeyData</key>
-	<data>
-	LS0tLS1CRUdJTiBDT05UQUlORVItLS0tLQpBQUVBQVRRVHdOS1loa1B3UDVDVlF5Ly9k
-	YWpqMUxlMm81Q2MzV0hUSlhKdmZNVWR0bG5yOGl3T29KMVFKZkpHClpJaWF5L2dib0t2
-	Yzc4dzZTMTh6Q0FnMVpqdENCelhubGtmNjN0Z0wwOTF3bzA4SjFYTzY1Z0VwbDNURUxq
-	V2EKcldMSnNCbm96ZHc0RGtHZHgybzhIRi95UTFvUTljVkxRZC8xL1I2d29oUVdNRFVq
-	S3IrWnRMUUY5Z2lsUEdzdAptQ0NGTW5nRytWZEIzdGNsVVNWUGFoSmpDZmdqSjU1eVZO
-	ZkRJVVdRSXBwVUR3OG13U1kzWlYxb1ZKY3pGWEVYCnJNUnN6LzBwMVVGRWpmRDdCci9w
-	QkdGUUxIRVV3cjVxRmw0anM3WUxxUjQ0WVdFSmtoalo3UUF0NXAxWWVsWDIKVS95SERY
-	ZWNLUiswdDk3UUFSS1JGTEpRbGZNNnREVW9mUXlhL0o5Y0tqYTNyYncyS3VERVpjS1J6
-	cDlHR0wyZgpqWGFjTEt6MDRIdGpmb3VBRWE5OW9uZTdrUTJ4YTFQcGxzTWdMY2VwMVhW
-	L0tHaExvL2I0MWNrYm8wTXhkSzVtCm9sOXpBdHRyb2pwRkJUZXFMeGFxbGRUQVVxUjJM
-	dVhBRzUrUTIzYXl5MzR0MEJmWS9NRFc4L3BvamlqZmhFRGMKekR4NWtlVmkxZ0NHSHlV
-	b1BMa1FvYXh2aHBLdFFJOG5jMGYya1Q5VGtiaENkeTJ2N2dEMXV2U1o3SEw2aEZBVwph
-	cFB4UWxKZjlDclh1SHZhZUMxTGZmNlpXQitlSmxVcG1DTzFNV1lnL0xlMGQrMTRpSnU0
-	b3pmb3pMWlB1WmJTCkZISkM0c1Vrbk50Vmd4OVFIS2dTdWkzNWh1UFlhSFM3OHV1NExy
-	ZVZFZHFjdE42R0I2UW01a0k3UGdZMGlNdUgKcW9HUGhNL3F0Vms2NS83TVNMQTkvck84
-	WnRKa2xlWkpiQnNUYmJzS2dFd1NKdU5EaGt5TVVzdWlReGllOEJMMwo0N242UnkvcWJH
-	eFJUQ05oY3VIT05nRVlxekUwaVZTQ2FXb0JzN0Q1Tm11Q2ZEVFdMNjNhQzQ4a2FLeFNY
-	VXJIClhHd3ZqTC9DOFBENkdDckQzU2dpMDJjMU9CNDhCUHZwWmRKY0pQbXYwSWNRUURU
-	OUZ5UzYvSDMzQzlsWm42Y24KY1h1N0tOcXc2ZGRwNFErN0ZnQ0RWY0xucmk5TE4rczVM
-	TGszSDJ1d3F6dGw0dkxTV3FkZG9jZkY4SDI1UTc5ZAp2VDNtRmRtOWJwS3B3YUZ3UGZn
-	ZCtabVJNWTViQmI2SXp2OTQ5Ymx6enRvd0pRam5DeHhFMVVWU0FoQlhSeG80Ckg3UjNu
-	bjU5RjJwTHQ3N0F3d2dheEpJUVNVa3preUg0d05FMDNyMFFma1JKaHBrTUlxQkwzeTBK
-	eU5pK0p2TkIKTFhiSlRLWHN0QnZ1RmxnNFhHL3puMityMHJKUmZINHFnT25ib0FXT0lZ
-	NDhPNEZ6NjdpNHFHdjRCV1U2SktkSApDRWxQMEJwMklZM0MzVGFzMkc5UmxTNnYwY2Q5
-	V3pFRkJ1bFY5WEt6TXdpMjZNOGMvU0xwcTl3aEIwZXdwVmxTClhXS241V09oM2gySGhQ
-	SUJpTVBvaE01blBpUUhUaDJyMGFyaXczYXNkMUVoaDA3RTdxanBxUmFuQmhuMnIwUTAK
-	UzVFeHJBVldjYnYzVnVYWHVyL2RjWHByNjI3dHNUbi9VanlFZEd6a2NyeFllZUZPTW04
-	NTdwSXlhRkc3SG50MQpJdUtmTnM0NlFOQURidHR1QzFGRm5RKzY2UzRWejQ0dTJ3OENE
-	b2RoSGF3YWN2VmlTQktTNWVvbER5NWhjb1BECnBoUk1qem5jc2UzdVh6djgwNDNpc2E2
-	amZLdEEyNUx2L1lYSzlKMFdkbmZvNUcyK0NDWk5BYUxzUFJHY0g2U1IKYk02Wk5YNlNz
-	ZkZJckU3SGMwMDdIcUJxTzJKUXZhbjdpRWJ0N3ordGtHbWJmaUhPCi0tLS0tRU5EIENP
-	TlRBSU5FUi0tLS0tCg==
-	</data>
-	<key>unbrick</key>
-	<true/>
-</dict>
-</plist>' >>./activ;
+token=$(cat ./AccountToken.crt);
+echo -e "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n\t<key>AccountToken</key>\n\t<data>\n\t"$token"\n\t</data>\n\t<key>AccountTokenCertificate</key>\n\t<data>\n\tLS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURaekNDQWsrZ0F3SUJBZ0lCQWpB\n\tTkJna3Foa2lHOXcwQkFRVUZBREI1TVFzd0NRWURWUVFHRXdKVlV6RVQKTUJFR0ExVUVD\n\taE1LUVhCd2JHVWdTVzVqTGpFbU1DUUdBMVVFQ3hNZFFYQndiR1VnUTJWeWRHbG1hV05o\n\tZEdsdgpiaUJCZFhSb2IzSnBkSGt4TFRBckJnTlZCQU1USkVGd2NHeGxJR2xRYUc5dVpT\n\tQkRaWEowYVdacFkyRjBhVzl1CklFRjFkR2h2Y21sMGVUQWVGdzB3TnpBME1UWXlNalUx\n\tTURKYUZ3MHhOREEwTVRZeU1qVTFNREphTUZzeEN6QUoKQmdOVkJBWVRBbFZUTVJNd0VR\n\tWURWUVFLRXdwQmNIQnNaU0JKYm1NdU1SVXdFd1lEVlFRTEV3eEJjSEJzWlNCcApVR2h2\n\tYm1VeElEQWVCZ05WQkFNVEYwRndjR3hsSUdsUWFHOXVaU0JCWTNScGRtRjBhVzl1TUlH\n\tZk1BMEdDU3FHClNJYjNEUUVCQVFVQUE0R05BRENCaVFLQmdRREZBWHpSSW1Bcm1vaUhm\n\tYlMyb1BjcUFmYkV2MGQxams3R2JuWDcKKzRZVWx5SWZwcnpCVmRsbXoySkhZdjErMDRJ\n\tekp0TDdjTDk3VUk3ZmswaTBPTVkwYWw4YStKUFFhNFVnNjExVApicUV0K25qQW1Ba2dl\n\tM0hYV0RCZEFYRDlNaGtDN1QvOW83N3pPUTFvbGk0Y1VkemxuWVdmem1XMFBkdU94dXZl\n\tCkFlWVk0d0lEQVFBQm80R2JNSUdZTUE0R0ExVWREd0VCL3dRRUF3SUhnREFNQmdOVkhS\n\tTUJBZjhFQWpBQU1CMEcKQTFVZERnUVdCQlNob05MK3Q3UnovcHNVYXEvTlBYTlBIKy9X\n\tbERBZkJnTlZIU01FR0RBV2dCVG5OQ291SXQ0NQpZR3UwbE01M2cyRXZNYUI4TlRBNEJn\n\tTlZIUjhFTVRBdk1DMmdLNkFwaGlkb2RIUndPaTh2ZDNkM0xtRndjR3hsCkxtTnZiUzlo\n\tY0hCc1pXTmhMMmx3YUc5dVpTNWpjbXd3RFFZSktvWklodmNOQVFFRkJRQURnZ0VCQUY5\n\tcW1yVU4KZEErRlJPWUdQN3BXY1lUQUsrcEx5T2Y5ek9hRTdhZVZJODg1VjhZL0JLSGhs\n\td0FvK3pFa2lPVTNGYkVQQ1M5Vgp0UzE4WkJjd0QvK2Q1WlFUTUZrbmhjVUp3ZFBxcWpu\n\tbTlMcVRmSC94NHB3OE9OSFJEenhIZHA5NmdPVjNBNCs4CmFia29BU2ZjWXF2SVJ5cFhu\n\tYnVyM2JSUmhUekFzNFZJTFM2alR5Rll5bVplU2V3dEJ1Ym1taWdvMWtDUWlaR2MKNzZj\n\tNWZlREF5SGIyYnpFcXR2eDNXcHJsanRTNDZRVDVDUjZZZWxpblpuaW8zMmpBelJZVHh0\n\tUzZyM0pzdlpEaQpKMDcrRUhjbWZHZHB4d2dPKzdidFcxcEZhcjBaakY5L2pZS0tuT1lO\n\teXZDcndzemhhZmJTWXd6QUc1RUpvWEZCCjRkK3BpV0hVRGNQeHRjYz0KLS0tLS1FTkQg\n\tQ0VSVElGSUNBVEUtLS0tLQo=\n\t</data>\n\t<key>AccountTokenSignature</key>\n\t<data>\n\traD2OkSpiKa05ol4Af0pmP8R/g6ISCErqNxRJyi/yxShUZ7e0MFRFe7lsILfRxmJD+8E\n\tA2ztZSQ+euGLMD7sjyzwlJsY1C6yHAyh+mq1cmLrYas+e/muxO5DyoAGqsb5jTLeM0jS\n\temD9aTA4r8aUbPvScjMIYHqHVMzLyZflZZ4=\n\t</data>\n\t<key>DeviceCertificate</key>\n\t<data>\n\tLS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM4akNDQWx1Z0F3SUJBZ0lKVTlE\n\teVdEQUlrV0pjTUEwR0NTcUdTSWIzRFFFQkJRVUFNRm94Q3pBSkJnTlYKQkFZVEFsVlRN\n\tUk13RVFZRFZRUUtFd3BCY0hCc1pTQkpibU11TVJVd0V3WURWUVFMRXd4QmNIQnNaU0Jw\n\tVUdodgpibVV4SHpBZEJnTlZCQU1URmtGd2NHeGxJR2xRYUc5dVpTQkVaWFpwWTJVZ1Ew\n\tRXdIaGNOTWpBd016STVNRGd6Ck9UVXpXaGNOTWpNd016STVNRGd6T1RVeldqQ0JnekV0\n\tTUNzR0ExVUVBeFlrUVRnelJFUkROakV0TUVFME5DMDAKUkRNeExVRXlSREl0TmtaRE5V\n\tSXlPVGhCUWtRMU1Rc3dDUVlEVlFRR0V3SlZVekVMTUFrR0ExVUVDQk1DUTBFeApFakFR\n\tQmdOVkJBY1RDVU4xY0dWeWRHbHViekVUTUJFR0ExVUVDaE1LUVhCd2JHVWdTVzVqTGpF\n\tUE1BMEdBMVVFCkN4TUdhVkJvYjI1bE1JR2ZNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0R05B\n\tRENCaVFLQmdRRG5sbS96RitETUhQMUQKOEt3VlFKYkVYajhTU0NjWnhSREsrU1NSdytl\n\tUnVramd5VGZBd3pqa0poVjJ0YVNWbWdnVDVKWUVBWUdlaXFCcQovajdTV1lWL0ZVK3oz\n\tc3lEQTRhMlBMRjdSNFZyVXluOW9xRzg5ajdRS2pON2hpZnp3Y1lFWmhlWmV3bzZoTkVO\n\tClRsVFlFK2RGZDVhOXgwbHhSQjFELzVXcnJtSGxaUUlEQVFBQm80R1ZNSUdTTUI4R0Ex\n\tVWRJd1FZTUJhQUZMTCsKSVNORWhwVnFlZFdCSm81ekVOaW5USTUwTUIwR0ExVWREZ1FX\n\tQkJTSE42R2FNQlIxeGVPYmc4U2pVNWU0T3FRYwpUakFNQmdOVkhSTUJBZjhFQWpBQU1B\n\tNEdBMVVkRHdFQi93UUVBd0lGb0RBZ0JnTlZIU1VCQWY4RUZqQVVCZ2dyCkJnRUZCUWNE\n\tQVFZSUt3WUJCUVVIQXdJd0VBWUtLb1pJaHZkalpBWUtBZ1FDQlFBd0RRWUpLb1pJaHZj\n\tTkFRRUYKQlFBRGdZRUE1QlI3aktnNFlBUm1GM3ZXVWR1NWRnTnhjd1RoU0hiYU9PNmdQ\n\tM25IeWhNU1B1NnIwYmxDcE0vdwpVZkNZZWZVV1Q0WFBXVXZwU2tsaW5QR1JiN01nSG5E\n\tWDJRVEM3REFYTTJiOHJiK2E5bTRYQkFFcmZyUVRlbkJJClFWdjI0ajRQSHdpNUd6L0I5\n\tQWJ6ZXEyTEw1blMvdmNKMDJ6VzJoUHhqb1lNQjVaU2UrYz0KLS0tLS1FTkQgQ0VSVElG\n\tSUNBVEUtLS0tLQo=\n\t</data>\n\t<key>DeviceConfigurationFlags</key>\n\t<string>0</string>\n\t<key>FairPlayKeyData</key>\n\t<data>\n\tLS0tLS1CRUdJTiBDT05UQUlORVItLS0tLQpBQUVBQVRRVHdOS1loa1B3UDVDVlF5Ly9k\n\tYWpqMUxlMm81Q2MzV0hUSlhKdmZNVWR0bG5yOGl3T29KMVFKZkpHClpJaWF5L2dib0t2\n\tYzc4dzZTMTh6Q0FnMVpqdENCelhubGtmNjN0Z0wwOTF3bzA4SjFYTzY1Z0VwbDNURUxq\n\tV2EKcldMSnNCbm96ZHc0RGtHZHgybzhIRi95UTFvUTljVkxRZC8xL1I2d29oUVdNRFVq\n\tS3IrWnRMUUY5Z2lsUEdzdAptQ0NGTW5nRytWZEIzdGNsVVNWUGFoSmpDZmdqSjU1eVZO\n\tZkRJVVdRSXBwVUR3OG13U1kzWlYxb1ZKY3pGWEVYCnJNUnN6LzBwMVVGRWpmRDdCci9w\n\tQkdGUUxIRVV3cjVxRmw0anM3WUxxUjQ0WVdFSmtoalo3UUF0NXAxWWVsWDIKVS95SERY\n\tZWNLUiswdDk3UUFSS1JGTEpRbGZNNnREVW9mUXlhL0o5Y0tqYTNyYncyS3VERVpjS1J6\n\tcDlHR0wyZgpqWGFjTEt6MDRIdGpmb3VBRWE5OW9uZTdrUTJ4YTFQcGxzTWdMY2VwMVhW\n\tL0tHaExvL2I0MWNrYm8wTXhkSzVtCm9sOXpBdHRyb2pwRkJUZXFMeGFxbGRUQVVxUjJM\n\tdVhBRzUrUTIzYXl5MzR0MEJmWS9NRFc4L3BvamlqZmhFRGMKekR4NWtlVmkxZ0NHSHlV\n\tb1BMa1FvYXh2aHBLdFFJOG5jMGYya1Q5VGtiaENkeTJ2N2dEMXV2U1o3SEw2aEZBVwph\n\tcFB4UWxKZjlDclh1SHZhZUMxTGZmNlpXQitlSmxVcG1DTzFNV1lnL0xlMGQrMTRpSnU0\n\tb3pmb3pMWlB1WmJTCkZISkM0c1Vrbk50Vmd4OVFIS2dTdWkzNWh1UFlhSFM3OHV1NExy\n\tZVZFZHFjdE42R0I2UW01a0k3UGdZMGlNdUgKcW9HUGhNL3F0Vms2NS83TVNMQTkvck84\n\tWnRKa2xlWkpiQnNUYmJzS2dFd1NKdU5EaGt5TVVzdWlReGllOEJMMwo0N242UnkvcWJH\n\teFJUQ05oY3VIT05nRVlxekUwaVZTQ2FXb0JzN0Q1Tm11Q2ZEVFdMNjNhQzQ4a2FLeFNY\n\tVXJIClhHd3ZqTC9DOFBENkdDckQzU2dpMDJjMU9CNDhCUHZwWmRKY0pQbXYwSWNRUURU\n\tOUZ5UzYvSDMzQzlsWm42Y24KY1h1N0tOcXc2ZGRwNFErN0ZnQ0RWY0xucmk5TE4rczVM\n\tTGszSDJ1d3F6dGw0dkxTV3FkZG9jZkY4SDI1UTc5ZAp2VDNtRmRtOWJwS3B3YUZ3UGZn\n\tZCtabVJNWTViQmI2SXp2OTQ5Ymx6enRvd0pRam5DeHhFMVVWU0FoQlhSeG80Ckg3UjNu\n\tbjU5RjJwTHQ3N0F3d2dheEpJUVNVa3preUg0d05FMDNyMFFma1JKaHBrTUlxQkwzeTBK\n\teU5pK0p2TkIKTFhiSlRLWHN0QnZ1RmxnNFhHL3puMityMHJKUmZINHFnT25ib0FXT0lZ\n\tNDhPNEZ6NjdpNHFHdjRCV1U2SktkSApDRWxQMEJwMklZM0MzVGFzMkc5UmxTNnYwY2Q5\n\tV3pFRkJ1bFY5WEt6TXdpMjZNOGMvU0xwcTl3aEIwZXdwVmxTClhXS241V09oM2gySGhQ\n\tSUJpTVBvaE01blBpUUhUaDJyMGFyaXczYXNkMUVoaDA3RTdxanBxUmFuQmhuMnIwUTAK\n\tUzVFeHJBVldjYnYzVnVYWHVyL2RjWHByNjI3dHNUbi9VanlFZEd6a2NyeFllZUZPTW04\n\tNTdwSXlhRkc3SG50MQpJdUtmTnM0NlFOQURidHR1QzFGRm5RKzY2UzRWejQ0dTJ3OENE\n\tb2RoSGF3YWN2VmlTQktTNWVvbER5NWhjb1BECnBoUk1qem5jc2UzdVh6djgwNDNpc2E2\n\tamZLdEEyNUx2L1lYSzlKMFdkbmZvNUcyK0NDWk5BYUxzUFJHY0g2U1IKYk02Wk5YNlNz\n\tZkZJckU3SGMwMDdIcUJxTzJKUXZhbjdpRWJ0N3ordGtHbWJmaUhPCi0tLS0tRU5EIENP\n\tTlRBSU5FUi0tLS0tCg==\n\t</data>\n\t<key>unbrick</key>\n\t<true/>\n</dict>\n</plist>" &>./activ;
 sleep 3;
 sshpass -p 'alpine' scp -p ./activ root@localhost:/./;
 sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /guid) && chflags nouchg "$GUI/../activation_records"'
