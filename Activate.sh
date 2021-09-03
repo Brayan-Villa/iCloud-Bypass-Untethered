@@ -87,7 +87,7 @@ sshpass -p 'alpine' ssh -o StrictHostKeyChecking=no root@localhost 'GUI=$(cat /g
 imei=$(ideviceinfo | grep -w InternationalMobileEquipmentIdentity | awk '{printf $NF}'); 
 Number=$(ideviceinfo | grep -w SerialNumber | awk '{printf $NF}'); 
 ProductType=$(ideviceinfo | grep -w ProductType | awk '{printf $NF}'); 
-meid=(if test -z $(ideviceinfo | grep -w MobileEquipmentIdentifier); then sleep 1; else echo -e \n\t"MobileEquipmentIdentifier" = \"ideviceinfo | grep -w MobileEquipmentIdentifier | awk '{printf $NF}'\"; fi ); 
+#	ESFUERZATE! -_-		meid=(if test -z $(ideviceinfo | grep -w MobileEquipmentIdentifier); then sleep 1; else echo -e \n\t"MobileEquipmentIdentifier" = \"ideviceinfo | grep -w MobileEquipmentIdentifier | awk '{printf $NF}'\"; fi ); 
 uniqueDiviceID=$(ideviceinfo | grep -w UniqueDeviceID | awk '{printf $NF}'); 
 wildcard="MIICogIBATALBgkqhkiG9w0BAQsxaJ8/BCIpOuefQAThUH8An0sU8u7ynkFtjU5iK7LCVPXvf1IsCsqfh20HNWFRCSOYRJ+XPQwAAAAA7u7u7u7u7u+flz4EAAAAAJ+XPwQBAAAAn5dABAEAAACfl0EEAQAAAJ+XTAQAAAAABIIBADqStNCOV64BLCKVls72U5Bwh8qTJHwaQtkPjUj/wh3RbtC45BoDNebydW4RmSefowABaXRYFfGFhuyXHxfQyxre5gDMh6CftLMQdSuE0tLHw+Kki0me5xFxBFHtwQdt/fgd1VRnNUI8zokLGfjm4N8V3A6oMvnDwZLlZMci7jPhDOk7OW2P6XD0RCirK6kaYMQEgJdPr5lCUJRv2ywc0URrGMWNvU759pObUPjHgIvqNXY+7MeLi3vKqRpft7beOwDohoo1e1+GVQVGYP7qYYmNBMJlLFO75h8bDaSMc3a5MfDgwDekbZn7Q0ZiQ2TPHB/FQSsbfphSRWfnmr9b3/mjggEgMAsGCSqGSIb3DQEBAQOCAQ8AMIIBCgKCAQEArJFPRdnc/E7Vgatg/AHbKnGEudR+ug8WZghxMOlPad3fL42hHAXReVRcBE5liQXEyaP0ojy3s3QJhuNEXwLMYOLCKJNAj4SrE6dZqJ9CQamouvEnZjdC/gLBG5jSuAI4zF+hjObe8OZnV6YGcooEbRkA51dj+x5zmY+vT0va/w+EOdAiTWi6xiWdVFQTXCpCTUzA9qcax58XUi04+dcVSEwVO9U3ZeyoIUrJD/FmoDjjZOidCHDgsCGlnLfQP/gLKOMpOfzw4dWFIW1IiDvs9Uy+U3YhyyE4HPDVx2oAf8ojhBMzsdqXGVV148H0mZSkR4+ulZVlR4E/mxB2ZdP7HQIDAQAB"; 
 activationRandomness=""; 
